@@ -1,0 +1,132 @@
+﻿@using System.Text;
+@using VendingMachine.Models;
+@using VendingMachine.Services;
+
+@inject ModalService _modalService
+@inject IAdminServices AdminService
+
+<Card Style="width: 300px; margin-top: 16px"
+      Actions="new[] { actionEdit(() => Edit()), actionDelete(() => Delete()) }">
+        <CardMeta Title=@viewModel.Name
+                  Description=@CombineString>
+              </CardMeta>
+        <a>Disabled: @viewModel.Disabled</a>
+    
+</Card>
+
+<Modal Title="@viewModel.Name"
+       Visible="@_visible"
+       OnOk="@OnOk"
+       OnCancel="@HandleCancel">
+
+    <Form Model="@newViewModel"
+        LabelColSpan="8"
+        WrapperColSpan="16">
+        <FormItem>
+            <Input Disabled="true" Placeholder="Basic usage" @bind-Value="context.Name" />
+        </FormItem>
+        <FormItem>
+            <Input Type="number" Placeholder="0" @bind-Value="@context.Value" />
+        </FormItem>
+        <FormItem WrapperColSpan="4">
+            <Checkbox @bind-Value="context.Disabled">Disabled</Checkbox>
+        </FormItem>
+    </Form>
+
+</Modal>
+
+
+
+@code {
+
+    [Parameter]
+    public required CoinTypeViewModel viewModel { get; set; }
+
+    [Parameter]
+    public required CancellationToken token { get; set; }
+
+    private CoinTypeViewModel newViewModel { get; set; } = new CoinTypeViewModel();
+
+    private bool _visible { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {       
+        newViewModel = await AdminService.Copy(viewModel, token);
+        //viewModel.Loading = false;
+    }
+
+    //private RenderFragment actionSetting =@<Template>
+    //    <Icon Type="setting" 
+    //    OnClick="(() => )"/>
+    //</Template>;
+
+    private RenderFragment actionEdit(Action clickAction) => 
+    @<Template>
+        <Icon Type="edit"
+         OnClick=clickAction />
+    </Template>;
+
+    private RenderFragment actionDelete(Action clickAction) => @<Template>
+        <Icon Type="delete"
+        OnClick=clickAction/>
+        </Template>
+    ;
+
+    private void Edit()
+    {
+        _visible = true;
+    }
+
+    private async void OnOk()
+    {
+        newViewModel.Name = viewModel.Name;
+        var result = await AdminService.EditItemFromViewModel(newViewModel, token);
+        viewModel = result;
+        newViewModel = await AdminService.Copy(viewModel, token);
+
+        _visible = false;
+
+        StateHasChanged();
+        AdminService.CallRequestRefresh();
+    }
+
+    private async void HandleCancel(MouseEventArgs e)
+    {
+        newViewModel = await AdminService.Copy(viewModel, token);
+        _visible = false;
+    }
+
+    private async void Delete()
+    {
+        await AdminService.DeleteItemFromViewModel(viewModel, token);
+
+        _visible = false;
+
+        StateHasChanged();
+        AdminService.CallRequestRefresh();
+    }
+
+    private string Format(double value)
+    {
+        return "$ " + value.ToString("n0");
+    }
+
+    private string CombineString 
+    { 
+        get
+        {
+            var builder = new StringBuilder();
+            builder.Append(viewModel.Name);
+            builder.Append(" Value-> ");
+            builder.Append(viewModel.Value);
+
+            return builder.ToString();
+        }
+    }
+
+}

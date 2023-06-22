@@ -1,0 +1,54 @@
+﻿@page "/adminCoins/{SecretKey}"
+@using VendingMachine.Services;
+@inject IAdminServices AdminService
+@inject IConfiguration configuration
+
+@if (SecretKey == configuration.GetValue<string>("SecretKey"))
+{
+    <h3>AdminPageCoins</h3>
+
+    <div style="min-height:calc(70%); overflow: auto; background-color: #ececec; padding: 20px;">
+
+        @for (int i = 0; i < adminItemViewModels.Count(); i += 4)
+        {
+            var _items = adminItemViewModels.Skip(i).Take(4);
+            <GridRow>
+                @foreach (var val in _items)
+                {
+                    <GridCol Span="6">
+                        <VendingMachine.Components.CointItem viewModel="val" token="token"></VendingMachine.Components.CointItem>
+                    </GridCol>
+                }
+            </GridRow>
+        }
+    </div>
+
+    <div style="margin-top:50px;">
+        <Form Model="@model"
+        LabelColSpan="8"
+        WrapperColSpan="4">
+
+            <FormItem Label="Name" WrapperColSpan="4">
+                <Input @bind-Value="context.Name" />
+            </FormItem>
+            <FormItem Label="Value" WrapperColSpan="4">
+                <Input Type="number" Placeholder="0" @bind-Value="@context.Value" />
+            </FormItem>
+            <FormItem WrapperColOffset="8" WrapperColSpan="4">
+                <Checkbox @bind-Value="context.Disabled">Disabled</Checkbox>
+            </FormItem>
+            <FormItem WrapperColOffset="8" WrapperColSpan="4">
+                <Button Type="@ButtonType.Primary" HtmlType="submit" OnClick="() => Submit()">
+                    Submit
+                </Button>
+                <Button Type="@ButtonType.Dashed" HtmlType="submit" OnClick="() => Clear()">
+                    Clear
+                </Button>
+            </FormItem>
+        </Form>
+    </div>
+}
+else
+{
+    <p role="alert">Sorry, there's nothing at this address.</p>
+}

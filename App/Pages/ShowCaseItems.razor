@@ -1,0 +1,76 @@
+﻿@page "/items"
+@using DataProvider.Entities;
+@using VendingMachine.Models;
+@using VendingMachine.Services;
+@using ApplicationCore
+@inject IShowCaseServices ShowCaseService
+@inject ApplicationInstace applicationInstanse
+
+<h3>Show Case Items</h3>
+
+<div>
+    <GridRow>
+        <GridCol Span="6" >
+            <GridRow Justify="center" Align="right" Style="margin-top:1rem;" Class="gutter-row">
+                <p style="margin-left:0px; justify-content:left;">Balance: @Balance</p>
+            </GridRow>
+            <GridRow Justify="center" Align="right" Class="gutter-row" Style="margin-top:1rem;">
+                
+                    <Select TItem="CoinTypeViewModel"
+                            TItemValue="string"
+                            DataSource="@Coins"
+                            @bind-Value="@_selectedValue"
+                            ValueName="@nameof(CoinTypeViewModel.Name)"
+                            LabelName="@nameof(CoinTypeViewModel.ValueString)"
+                            DisabledName="@nameof(CoinTypeViewModel.Disabled)"
+                            Style="width:120px"
+                            Placeholder="Select a person"
+                            AllowClear
+                            OnSelectedItemChanged="OnSelectedItemChangedHandler">
+                    </Select>
+                    <Button Disabled="(selectedValue.Disabled || DisabledAddButton)" Type="@ButtonType.Default" OnClick="AddCoin"> 
+                        Add Coin
+                    </Button>
+            </GridRow>
+            <GridRow Justify="center" Align="right" Style="margin-top:1rem;">
+                <Button Type="@ButtonType.Primary" OnClick="Pay" Disabled="DisabledAddButton">
+                    Pay
+                </Button>
+            </GridRow>
+            <GridRow Justify="center" Align="right" Style="margin-top:1rem;">
+                <p>Returned: @Returned</p>
+            </GridRow>
+        </GridCol>
+        <GridCol Span="18">
+            @for (int i = 0; i < Items.Count(); i += 4)
+            {
+                var _items = Items.Skip(i).Take(4);
+
+                <GridRow>
+                    @foreach (var item in _items)
+                    {
+                        <GridCol Span="6">
+                            <Card Size="small" Title=@(item.CatalogBrand.Name) Style="width:300px;">
+                                <Extra>
+                                    <a>@(item.CatalogBrand.Cost) $</a>
+                                </Extra>
+                                <Body>
+                                    <p>Avaliable: @((!item.Disabled).ToString())</p>
+                                    <p>Volume: @item.CatalogBrand.Volume)</p>
+                                    <p>@item.Message</p>
+                                    <Button Type="@ButtonType.Primary"
+                                            Loading="item.Loading"
+                                            Disabled="item.Disabled"
+                                            OnClick=@(_ => AddToCardAsync(item))>
+                                        Add to card
+                                    </Button>
+                                </Body>
+                            </Card>
+                        </GridCol>
+                    }
+                </GridRow>
+            }
+        </GridCol>
+    </GridRow>
+</div>
+

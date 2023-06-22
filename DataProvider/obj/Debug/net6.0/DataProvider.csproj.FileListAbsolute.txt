@@ -1,0 +1,14 @@
+C:\Users\Gleb\source\repos\DataProvider\bin\Debug\net6.0\DataProvider.deps.json
+C:\Users\Gleb\source\repos\DataProvider\bin\Debug\net6.0\DataProvider.runtimeconfig.json
+C:\Users\Gleb\source\repos\DataProvider\bin\Debug\net6.0\DataProvider.dll
+C:\Users\Gleb\source\repos\DataProvider\bin\Debug\net6.0\DataProvider.pdb
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.csproj.AssemblyReference.cache
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.AssemblyInfoInputs.cache
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.AssemblyInfo.cs
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.csproj.CoreCompileInputs.cache
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.dll
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\refint\DataProvider.dll
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.pdb
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\DataProvider.genruntimeconfig.cache
+C:\Users\Gleb\source\repos\DataProvider\obj\Debug\net6.0\ref\DataProvider.dll
