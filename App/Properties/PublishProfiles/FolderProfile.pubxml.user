@@ -4,7 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\Gleb\source\repos\VendingMachine\bin\Release\net6.0\publish\</_PublishTargetUrl>
-    <History>True|2023-06-17T15:41:17.2756337Z;</History>
+    <_PublishTargetUrl>D:\Repos\dotnet-docker\src\App\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2023-10-05T22:09:21.8994977Z;True|2023-06-17T17:41:17.2756337+02:00;</History>
+    <LastFailureDetails />
   </PropertyGroup>
 </Project>

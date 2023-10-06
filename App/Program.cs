@@ -26,22 +26,22 @@ namespace VendingMachine
             builder.Services.AddSingleton<IConfiguration>(provider => configuration);
             builder.Services.AddLogging();
 
-            string connectString = configuration.GetConnectionString("DefaultConnection");
-            SqlConnectionStringBuilder Sqlbuilder =
-                new SqlConnectionStringBuilder(connectString);
-            Console.WriteLine("Original: " + Sqlbuilder.ConnectionString);
-            Console.WriteLine("AttachDBFileName={0}", Sqlbuilder.AttachDBFilename);
+            //string connectString = configuration.GetConnectionString("DefaultConnection");
+            //SqlConnectionStringBuilder Sqlbuilder =
+            //    new SqlConnectionStringBuilder(connectString);
+            //Console.WriteLine("Original: " + Sqlbuilder.ConnectionString);
+            //Console.WriteLine("AttachDBFileName={0}", Sqlbuilder.AttachDBFilename);
 
-            Sqlbuilder.AttachDBFilename = @"D:\Repos\SQLSERVER\MSSQL15.SQLEXPRESS\MSSQL\DATA\Vending_DEV.mdf";
+            //Sqlbuilder.AttachDBFilename = @"D:\Repos\SQLSERVER\MSSQL15.SQLEXPRESS\MSSQL\DATA\Vending_DEV.mdf";
 
-            Console.WriteLine("Modified: " + Sqlbuilder.ConnectionString);
+            //Console.WriteLine("Modified: " + Sqlbuilder.ConnectionString);
 
-            using (SqlConnection connection = new SqlConnection(Sqlbuilder.ConnectionString))
-            {
-                connection.Open();
-                // Now use the open connection.
-                Console.WriteLine("Database = " + connection.Database);
-            }
+            //using (SqlConnection connection = new SqlConnection(Sqlbuilder.ConnectionString))
+            //{
+            //    connection.Open();
+            //    // Now use the open connection.
+            //    Console.WriteLine("Database = " + connection.Database);
+            //}
 
             //builder.Services.AddDbContextFactory<VendingDbContext, VendingDbContextFactory>(lifetime: ServiceLifetime.Scoped);
             builder.Services.AddDbContext<VendingDbContext>();
